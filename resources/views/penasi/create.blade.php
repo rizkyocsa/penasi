@@ -9,7 +9,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
-                <div class="card-header">{{ __('Buat Pengadua dan Aspirasi')}}</div>
+                <div class="card-header">{{ __('Buat Pengaduan dan Aspirasi')}}</div>
             <div class="card-body">
                 <form action="{{ route('penasi.submit')}}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -60,11 +60,11 @@
                 $(kategori).append('<option value="Psikologi" > Psikologi </option>');
                 $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
             }else if(id == "Aspirasi"){
                 $(kategori).empty();
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
             }else{
                 $(kategori).empty();
                 $(kategori).append('<option value="" > --Kategori-- </option>');

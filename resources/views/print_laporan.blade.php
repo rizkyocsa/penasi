@@ -8,10 +8,10 @@
     <!-- <title>Document</title> -->
 </head>
 <body>
-    <h1 class="text-center">Data PENASI</h1>
-    <p class="text-center">Laporan Data PENASI</p>
+    <h1 class="text-center">DATA PENASI</h1>
+    <p class="text-center">LAPORAN DATA PENASI</p>
     <br>
-    <table id="table-data" class="table table-bordered">
+    <table id="table-data" class="table table-bordered table responsive">
         <thead>
             <tr>
                 <th>NO</th>

@@ -11,7 +11,7 @@
         <div class="card card-default"> 
                 <div class="card-header">{{ __('Check Pengaduan dan Aspirasi')}}</div>
             <div class="card-body">
-                <table id="table-data" class="table table-bordered">
+                <table id="table-data" class="table table-bordered table-responsive">
                     <thead>
                         <tr class="text-center">
                             <th>NO</th>

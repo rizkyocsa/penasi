@@ -13,7 +13,7 @@
             <div class="card-body">
                 <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fa fa-plus"></i>Tambah Data</button>                 -->
                 <!-- <hr> -->
-                <table id="table-data" class="table table-bordered">
+                <table id="table-data" class="table table-bordered table-responsive">
                     <thead>
                         <tr class="text-center">
                             <th>NO</th>
@@ -105,7 +105,7 @@
                             <div class="form-group">
                                     <label for="jenis">Silahkan Pilih Tanggapan</label>
                                     <select class="custom-select" name="status" id="edit-status">
-                                        <option value="Proses">--Tanggapan--</option>
+                                        <option value="Proses" hidden>--Tanggapan--</option>
                                         <option value="Selesai">Diterima</option>
                                         <option value="Ditolak">Ditolak</option>
                                     </select>
