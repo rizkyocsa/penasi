@@ -56,14 +56,8 @@ class PenasiController extends Controller
         $penasi->berkasPendukung = $req->get('berkasPendukung');
         $penasi->tempat = $req->get('tempat');
         $penasi->status = "Proses";
-        $anon = $req->get('checkbox');
-
-        if($anon == "true"){
-            $penasi->pengirim = "Anonim";
-        }else{
-            $penasi->pengirim = $user;
-        }
-        
+        $penasi->pengirim = $user;
+        $penasi->anonim = $req->get('checkbox');        
 
         if ($req->hasFile('berkasPendukung')) {
             $extension = $req->file('berkasPendukung')->extension();

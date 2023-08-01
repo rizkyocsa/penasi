@@ -55,7 +55,13 @@
                                     <span class="badge bg-warning">{{$data->status}}</span>  
                                 @endif  
                                 </td>
-                                <td>{{$data->pengirim}} </td>
+                                <td>
+                                @if($data->anonim == true)
+                                    <p>anonim</p>
+                                @else
+                                    {{$data->pengirim}}
+                                @endif  
+                                </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-tanggapi" class="btn btn-success" data-toggle="modal" data-target="#tanggapiModal" data-id="{{ $data->id }}"

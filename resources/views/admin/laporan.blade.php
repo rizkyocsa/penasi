@@ -57,7 +57,13 @@
                                     <span class="badge bg-warning">{{$data->status}}</span>  
                                 @endif  
                                 </td>
-                                <td>{{$data->pengirim}}</td>
+                                <td>
+                                @if($data->anonim == true)
+                                    <p>anonim</p>
+                                @else
+                                    {{$data->pengirim}}
+                                @endif    
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
