@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!-- Modal Edit Buku -->
+    <!-- Modal Edit Penasi -->
     <div class="modal fade" id="tanggapiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
