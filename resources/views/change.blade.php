@@ -15,7 +15,11 @@
                     @csrf
                         <div class="form-group">
                             <label for="deskripsi">Password Baru</label>
-                            <input type="text" name="password" id="password" class="form-control" required/>
+                            <input type="password" name="password" id="password" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi">Konfrimasi Password Baru</label>
+                            <input type="password" name="konfirmasi_password" id="konfirmasi_password" class="form-control" required/>
                         </div>
                     <div class="row">
                         <input type="hidden" value="{{$user->username}}"  name="username" id="username" class="form-control" required/>

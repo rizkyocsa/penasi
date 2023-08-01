@@ -19,6 +19,7 @@
                             <th>DESKRIPSI</th>
                             <th>KATEGORI</th>
                             <th>BERKAS</th>
+                            <th>TEMPAT</th>
                             <th>TANGGAPAN</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
@@ -39,8 +40,17 @@
                                         [Gambar tidak tersedia]
                                     @endif
                                 </td>
+                                <td>{{$data->tempat}}</td>
                                 <td>{{$data->tanggapan}}</td>
-                                <td>{{$data->status}}</td>
+                                <td>
+                                @if($data->status == "Selesai")
+                                    <span class="badge bg-success">{{$data->status}}</span>
+                                @elseif($data->status == "Ditolak")
+                                    <span class="badge bg-danger">{{$data->status}}</span>
+                                @else
+                                    <span class="badge bg-warning">{{$data->status}}</span>  
+                                @endif  
+                                </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-penasi" class="btn btn-success" data-toggle="modal" data-target="#editPenasi" data-id="{{ $data->id }}" 
@@ -101,15 +111,20 @@
                                         <option value="Saran dan Prasana" > Saran dan Prasana </option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="tempat">Tempat</label>
+                                    <input type="text" name="tempat" id="edit-tempat" class="form-control" required/>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="image-area"></div>
                                 <div class="form-group">
-                                    <label for="edit-berkasPendukung">Cover</label>
+                                    <label for="edit-berkasPendukung">Berkas Pendukung</label>
                                     <input type="file" name="berkasPendukung" id="edit-berkasPendukung" class="form-control" required/>
                                     {!!$errors->first('berkasPendukung', '<span class="text-danger">:message</span>')!!}
                                 </div>
                             </div>
+                            
                         </div>                        
                         <div class="modal-footer">
                             <input type="hidden" name="id" id="edit-id">
@@ -140,10 +155,12 @@
                 $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
                 $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Lainnya" > Lainnya </option>');
             }else if(id == "Aspirasi"){
                 $(kategori).empty();
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
                 $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Lainnya" > Lainnya </option>');
             }else{
                 $(kategori).empty();
                 $(kategori).append('<option value="" > --Kategori-- </option>');
@@ -170,6 +187,7 @@
                         // $('#edit-kategori').val(res.kategori);
                         $('#edit-id').val(res.id);
                         $('#old-berkasPendukung').val(res.berkasPendukung);
+                        $('#old-berkasPendukung').val(res.tempat);
                         if(res.cover !== null){
                             $('#image-area').append(
                                 "<img src='"+baseurl+"/storage/berkasPendukung/"+res.berkasPendukung+"' width='200px'>"

@@ -15,7 +15,7 @@ class UsersController extends Controller
 {
     public function user()
     {
-        $user = User::All();
+        $user = User::All()->where('roles_id', 2);
         return view('admin.user', compact('user'));
     }
 
@@ -34,6 +34,7 @@ class UsersController extends Controller
         $user->username = $req->get('username');
         $user->email = $req->get('email');
         $user->password = Hash::make('12345678');
+        $user->tahun_ajaran = date("Y");
         $user->roles_id = 2;
 
         $user->save();
@@ -60,9 +61,19 @@ class UsersController extends Controller
 
         $validate = $req->validate([
             'name' => 'required',
+            'email' => 'required',
         ]);
 
-        $user->name = $req->get('name');
+        
+
+        if($req->get('tahun_ajaran') == ""){
+            $user->name = $req->get('name');
+            $user->email = $req->get('email');
+        }else{
+            $user->name = $req->get('name');
+            $user->email = $req->get('email');
+            $user->tahun_ajaran = $req->get('tahun_ajaran');
+        }
 
         $user->save();
 
@@ -100,18 +111,29 @@ class UsersController extends Controller
 
         $validate = $req->validate([
             'password' => 'required',
+            'konfirmasi_password' => 'required',
         ]);
 
-        $user->password = Hash::make($req->get('password'));
+        if($req->get('password') == $req->get('konfirmasi_password')){
+            $user->password = Hash::make($req->get('password'));
 
-        $user->save();
+            $user->save();
 
-        $notification = array(
-            'message' =>'Ganti Password berhasil', 
-            'alert-type' =>'success'
-        );
+            $notification = array(
+                'message' =>'Ganti Password berhasil', 
+                'alert-type' =>'success'
+            );
 
-        return redirect()->route('change')->with($notification);
+            return redirect()->route('change')->with($notification);
+        }else{
+            $notification = array(
+                'message' =>'Ganti Password Gagal, coba cek kembali passwordnya', 
+                'alert-type' =>'warning'
+            );
+
+            return redirect()->route('change')->with($notification);
+        }
+        
     }
 
     public function import(Request $req){

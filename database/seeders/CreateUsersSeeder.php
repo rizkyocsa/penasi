@@ -20,6 +20,7 @@ class CreateUsersSeeder extends Seeder
                 'username' => 'isUser',
                 'email' => 'user@mail.com',
                 'password' => bcrypt('12345678'),
+                'tahun_ajaran' => 2023,
                 'roles_id' => 2
             ],
             [

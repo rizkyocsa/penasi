@@ -20,10 +20,12 @@
                     <thead>
                         <tr class="text-center">
                             <th>NO</th>
+                            <th>TGL</th>
                             <th>JENIS</th>
                             <th>DESKRIPSI</th>
                             <th>KATEGORI</th>
                             <th>BERKAS PENDUKUNG</th>
+                            <th>TEMPAT</th>
                             <th>TANGGAPAN</th>
                             <th>STATUS</th>
                             <th>PENGIRIM</th>
@@ -33,6 +35,7 @@
                         @foreach($penasi as $data)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
+                                <td>{{$data->created_at->day}} - {{$data->created_at->month}} - {{$data->created_at->year}}</td>
                                 <td>{{$data->jenis}}</td>
                                 <td>{{$data->deskripsi}}</td>
                                 <td>{{$data->kategori}}</td>
@@ -43,8 +46,17 @@
                                         [Gambar tidak tersedia]
                                     @endif
                                 </td>
+                                <td>{{$data->tempat}}</td>
                                 <td>{{$data->tanggapan}}</td>
-                                <td>{{$data->status}}</td>
+                                <td>
+                                @if($data->status == "Selesai")
+                                    <span class="badge bg-success">{{$data->status}}</span>
+                                @elseif($data->status == "Ditolak")
+                                    <span class="badge bg-danger">{{$data->status}}</span>
+                                @else
+                                    <span class="badge bg-warning">{{$data->status}}</span>  
+                                @endif  
+                                </td>
                                 <td>{{$data->pengirim}}</td>
                             </tr>
                         @endforeach

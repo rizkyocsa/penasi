@@ -43,7 +43,7 @@ class PenasiController extends Controller
             'jenis' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required',
-            'berkasPendukung' => 'required',
+            // 'berkasPendukung' => 'required',
         ]);
 
         $user = Auth::user()->name;
@@ -54,8 +54,16 @@ class PenasiController extends Controller
         $penasi->deskripsi = $req->get('deskripsi');
         $penasi->jenis = $req->get('jenis');
         $penasi->berkasPendukung = $req->get('berkasPendukung');
+        $penasi->tempat = $req->get('tempat');
         $penasi->status = "Proses";
-        $penasi->pengirim = $user;
+        $anon = $req->get('checkbox');
+
+        if($anon == "true"){
+            $penasi->pengirim = "Anonim";
+        }else{
+            $penasi->pengirim = $user;
+        }
+        
 
         if ($req->hasFile('berkasPendukung')) {
             $extension = $req->file('berkasPendukung')->extension();
@@ -92,13 +100,14 @@ class PenasiController extends Controller
             'jenis' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required',
-            'berkasPendukung' => 'required',
+            // 'berkasPendukung' => 'required',
         ]);
 
         $penasi->jenis = $req->get('jenis');
         $penasi->deskripsi = $req->get('deskripsi');
         $penasi->kategori = $req->get('kategori');
         $penasi->berkasPendukung = $req->get('berkasPendukung');
+        $penasi->tempat = $req->get('tempat');
 
         if($req->hasFile('berkasPendukung')){
             $extension = $req->file('berkasPendukung')->extension();
@@ -130,9 +139,19 @@ class PenasiController extends Controller
             'tanggapan' => 'required',
             'status' => 'required',
         ]);
+        
 
         $penasi->tanggapan = $req->get('tanggapan');
         $penasi->status = $req->get('status');
+
+        if($penasi->status == "Proses"){
+            $notification = array(
+                'message' => 'Tolong pilih status tanggapi',
+                'alert-type' => 'warning'
+            );
+    
+            return redirect()->route('admin.penasi')->with($notification);
+        }
 
         $penasi->save();
 

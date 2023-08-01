@@ -12,7 +12,7 @@
                 <div class="card-header">{{ __('Pengelolaan Siswa')}}</div>
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fa fa-plus"></i>Tambah Data</button>                
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#importDataModal">Import</button>
+                <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#importDataModal">Import</button> -->
                 <hr>
                 <table id="table-data" class="table table-bordered">
                     <thead>
@@ -21,6 +21,7 @@
                             <!-- <th>NIK</th> -->
                             <th>NAMA</th>
                             <th>EMAIL</th>
+                            <th>TAHUN AJARAN</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -30,6 +31,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$data->name}}</td>
                                 <td>{{$data->email}}</td>
+                                <td>{{$data->tahun_ajaran}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-user" class="btn btn-success" data-toggle="modal" data-target="#editUserModal" data-id="{{ $data->id }}">Edit</button>
@@ -111,6 +113,13 @@
                             <div class="form-group">
                                 <label for="deskripsi">Email</label>
                                 <input type="email" name="email" id="edit-email" class="form-control" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="tahun_ajaran">Silahkan Pilih Status</label>
+                                <select class="custom-select" name="tahun_ajaran" id="edit-tahun_ajaran">
+                                    <option value="">--Status--</option>
+                                    <option value="Non-Aktif">Non-Aktif</option>
+                                </select>
                             </div>
                             <!-- <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>

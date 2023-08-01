@@ -15,10 +15,12 @@
         <thead>
             <tr>
                 <th>NO</th>
+                <th>TGL</th>
                 <th>JENIS</th>
                 <th>DESKRIPSI</th>
                 <th>KATEGORI</th>
                 <th>BERKAS PENDUKUNG</th>
+                <th>TEMPAT</th>
                 <th>TANGGAPAN</th>
                 <th>STATUS</th>
                 <th>PENGIRIM</th>
@@ -30,6 +32,7 @@
                 <tr>
                     <!-- <td>{{$loop->iteration}}</td> -->
                     <td>{{$no++}}</td>
+                    <td>{{$penasi->created_at->day}} - {{$penasi->created_at->month}} - {{$penasi->created_at->year}}</td>
                     <td>{{$penasi->jenis}}</td>
                     <td>{{$penasi->deskripsi}}</td>
                     <td>{{$penasi->kategori}}</td>
@@ -41,6 +44,7 @@
                             [Gambar tidak tersedia]
                         @endif
                     </td>
+                    <td>{{$penasi->tempat}}</td>
                     <td>{{$penasi->tanggapan}}</td>
                     <td>{{$penasi->status}}</td>
                     <td>{{$penasi->pengirim}}</td>

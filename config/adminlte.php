@@ -312,13 +312,18 @@ return [
         //     'icon' => 'far fa-fw fa-book',
         //     'can'  => 'isAdmin',
         // ],
-        [
-            'text' => 'Data Siswa',
-            'url'  => 'admin/user',
-            'icon' => 'fas fa-light fa-users',
-            'can'  => 'isAdmin',
-        ],
-        [
+       // [
+        //    'text' => 'Data Siswa',
+        //   'url'  => 'admin/user',
+        //    'icon' => 'fas fa-light fa-users',
+        //    'can'  => 'isAdmin',
+        //],
+        ['text' => 'Data Siswa',
+        'url'  => 'admin/user',
+        'icon' => 'fas fa-light fa-users',
+        'can'  => 'isAdmin',
+       ],
+       [
             'text' => 'Data Penasi',
             'url'  => 'admin/penasi',
             'icon' => 'fas fa-light fa-comments',
@@ -352,7 +357,13 @@ return [
             'text' => 'Ganti Password',
             'url'  => 'change',
             'icon' => 'fas fa-light fa-lock',
-            'can'  => 'isUser',
+            'can'  => 'isUser', 
+        ],
+        [
+            'text' => 'Ganti Password',
+            'url'  => 'change',
+            'icon' => 'fas fa-light fa-lock',
+            'can'  => 'isAdmin', 
         ],
     ],
 

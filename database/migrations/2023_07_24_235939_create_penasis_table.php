@@ -19,6 +19,7 @@ class CreatePenasisTable extends Migration
             $table->string('deskripsi');
             $table->string('kategori');
             $table->string('berkasPendukung')->nullable();
+            $table->string('tempat')->nullable();
             $table->string('tanggapan')->nullable();
             $table->string('status');
             $table->string('pengirim');

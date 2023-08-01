@@ -37,6 +37,15 @@
                             <label for="exampleInputUsername1">Berkas Pendukung</label>
                             <input type="file" class="form-control rounded" id="berkasPendukung" name="berkasPendukung" placeholder="Berkas Pendukung">
                         </div>
+                        <div class="form-group">
+                            <label for="tempat">Tempat</label>
+                            <input type="text" name="tempat" id="tempat" class="form-control"/>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checkbox" id="checkbox" value="false"> Kirim sebagai anonim
+                            </label>
+                        </div>
                     <div class="row">
                         <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
@@ -61,43 +70,24 @@
                 $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
                 $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Lainnya" >Lainnya</option>');
             }else if(id == "Aspirasi"){
                 $(kategori).empty();
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
                 $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Lainnya" >Lainnya</option>');
             }else{
                 $(kategori).empty();
                 $(kategori).append('<option value="" > --Kategori-- </option>');
             }
         });
 
-
-        // $(function(){
-        //     $(document).on('change','#kategori', function(){
-        //         let id = $(this).val();
-        //         alert(id);
-        //         $('#image-area').empty();
-        //         $.ajax({
-        //             type: "get",
-        //             url: "{{url('/admin/ajaxadmin/dataBuku')}}/"+id,
-        //             dataType: 'json',
-        //             success: function(res){
-        //                 $('#edit-judul').val(res.judul);
-        //                 $('#edit-penerbit').val(res.penerbit);
-        //                 $('#edit-penulis').val(res.penulis);
-        //                 $('#edit-tahun').val(res.tahun);
-        //                 $('#edit-id').val(res.id);
-        //                 $('#edit-old-cover').val(res.cover);
-        //                 if(res.cover !== null){
-        //                     $('#image-area').append(
-        //                         "<img src='"+baseurl+"/storage/cover_buku/"+res.cover+"' width='200px'>"
-        //                     );
-        //                 }else{
-        //                     $('#image-area').append('[Gambar tidak tersedia]');
-        //                 }
-        //             },
-        //         });
-        //     });
-        // });
+        $("#checkbox").on('change', function() {
+            if ($(this).is(':checked')) {
+                $(this).attr('value', 'true');
+            } else {
+                $(this).attr('value', 'false');
+            }             
+        });
 </script>
 @endsection
