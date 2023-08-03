@@ -113,22 +113,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="tempat">Tempat</label>
-                                    <input type="text" name="tempat" id="edit-tempat" class="form-control" required/>
+                                    <input type="text" name="tempat" id="edit-tempat" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="image-area"></div>
                                 <div class="form-group">
                                     <label for="edit-berkasPendukung">Berkas Pendukung</label>
-                                    <input type="file" name="berkasPendukung" id="edit-berkasPendukung" class="form-control" required/>
+                                    <input type="file" name="berkasPendukung" id="edit-berkasPendukung" class="form-control"/>
                                     {!!$errors->first('berkasPendukung', '<span class="text-danger">:message</span>')!!}
                                 </div>
                             </div>
-                            
                         </div>                        
                         <div class="modal-footer">
                             <input type="hidden" name="id" id="edit-id">
-                            <input type="hidden" name="old-berkasPendukung" id="old-berkasPendukung">
+                            <input type="text" name="old-berkasPendukung" id="old-berkasPendukung">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
                         </div>
@@ -187,7 +186,7 @@
                         // $('#edit-kategori').val(res.kategori);
                         $('#edit-id').val(res.id);
                         $('#old-berkasPendukung').val(res.berkasPendukung);
-                        $('#old-berkasPendukung').val(res.tempat);
+                        $('#edit-tempat').val(res.tempat);
                         if(res.cover !== null){
                             $('#image-area').append(
                                 "<img src='"+baseurl+"/storage/berkasPendukung/"+res.berkasPendukung+"' width='200px'>"

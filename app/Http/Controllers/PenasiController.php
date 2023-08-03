@@ -57,7 +57,14 @@ class PenasiController extends Controller
         $penasi->tempat = $req->get('tempat');
         $penasi->status = "Proses";
         $penasi->pengirim = $user;
-        $penasi->anonim = $req->get('checkbox');        
+
+        // dd($req->get('berkasPendukung'));
+
+        if($req->get('checkbox') == null || $req->get('checkbox') == "false"){
+            $penasi->anonim = "false";   
+        }else{
+            $penasi->anonim = $req->get('checkbox');   
+        }
 
         if ($req->hasFile('berkasPendukung')) {
             $extension = $req->file('berkasPendukung')->extension();
@@ -100,21 +107,31 @@ class PenasiController extends Controller
         $penasi->jenis = $req->get('jenis');
         $penasi->deskripsi = $req->get('deskripsi');
         $penasi->kategori = $req->get('kategori');
-        $penasi->berkasPendukung = $req->get('berkasPendukung');
+        // $penasi->berkasPendukung = $req->get('berkasPendukung');
         $penasi->tempat = $req->get('tempat');
 
-        if($req->hasFile('berkasPendukung')){
-            $extension = $req->file('berkasPendukung')->extension();
+        // $cek = $req->get('tempat');
+        // dd($cek);
 
-            $filename = 'berkasPendukung'.time().'.'.$extension;
-
-            $req->file('berkasPendukung')->storeAs(
-                'public/berkasPendukung', $filename
-            );
-
-            Storage::delete('public/berkasPendukung/'.$req->get('old-berkasPendukung'));
-            $penasi->berkasPendukung = $filename;
-        }
+        // if($req->get('berkasPendukung') !== null){
+            
+            if($req->hasFile('berkasPendukung')){
+                $extension = $req->file('berkasPendukung')->extension();
+    
+                $filename = 'berkasPendukung'.time().'.'.$extension;
+    
+                $req->file('berkasPendukung')->storeAs(
+                    'public/berkasPendukung', $filename
+                );
+    
+                Storage::delete('public/berkasPendukung/'.$req->get('old-berkasPendukung'));
+                $penasi->berkasPendukung = $filename;
+            }else{
+                $penasi->berkasPendukung = $req->get('old-berkasPendukung');
+            }
+        // }else{
+        //     $penasi->berkasPendukung = $req->get('old-berkasPendukung');
+        // }
 
         $penasi->save();
 

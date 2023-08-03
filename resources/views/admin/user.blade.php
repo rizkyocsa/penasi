@@ -31,7 +31,13 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$data->name}}</td>
                                 <td>{{$data->email}}</td>
-                                <td>{{$data->tahun_ajaran}}</td>
+                                <td>
+                                    @if(date('Y') - $data->tahun_ajaran >= 3)
+                                        Sudah Lulus    
+                                    @else
+                                        {{$data->tahun_ajaran}}
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-user" class="btn btn-success" data-toggle="modal" data-target="#editUserModal" data-id="{{ $data->id }}">Edit</button>
@@ -73,10 +79,16 @@
                             <label for="deskripsi">Email</label>
                             <input type="email" name="email" id="email" class="form-control" required/>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="deskripsi">Deskripsi</label>
-                            <input type="text" name="deskripsi" id="deskripsi" class="form-control" required/>
-                        </div> -->
+                        <div class="form-group">
+                                <label for="tahun_ajaran">Silahkan Pilih Status</label>
+                                <select class="custom-select" name="tahun_ajaran" id="edit-tahun_ajaran">
+                                    <option value="{{ date('Y') }}">{{ date('Y') }}</option>
+                                    <option value="{{ date('Y')-1 }}">{{ date('Y')-1 }}</option>
+                                    <option value="{{ date('Y')-2 }}">{{ date('Y')-2 }}</option>
+                                    <option value="{{ date('Y')-3 }}">{{ date('Y')-3 }}</option>
+                                    <!-- <option value="Non-Aktif">Non-Aktif</option> -->
+                                </select>
+                            </div>
                         <div class="row">
                             <button type="submit" class="btn btn-primary w-100">Kirim</button>
                         </div>
@@ -165,7 +177,6 @@
         </div>
     </div>
 @endsection
-
 
 @yield('adminlte_js')
 
