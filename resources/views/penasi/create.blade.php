@@ -34,11 +34,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Berkas Pendukung</label>
+                            <label for="exampleInputUsername1">Berkas Pendukung (Optional)</label>
                             <input type="file" class="form-control rounded" id="berkasPendukung" name="berkasPendukung" placeholder="Berkas Pendukung">
                         </div>
                         <div class="form-group">
-                            <label for="tempat">Tempat</label>
+                            <label for="tempat">Tempat (Optional)</label>
                             <input type="text" name="tempat" id="tempat" class="form-control"/>
                         </div>
                         <div class="checkbox">
@@ -69,12 +69,12 @@
                 $(kategori).append('<option value="Psikologi" > Psikologi </option>');
                 $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 $(kategori).append('<option value="Lainnya" >Lainnya</option>');
             }else if(id == "Aspirasi"){
                 $(kategori).empty();
                 $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Sarana dan Prasana" > Saran dan Prasana </option>');
+                $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 $(kategori).append('<option value="Lainnya" >Lainnya</option>');
             }else{
                 $(kategori).empty();

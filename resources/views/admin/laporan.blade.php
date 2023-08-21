@@ -58,7 +58,7 @@
                                 @endif  
                                 </td>
                                 <td>
-                                @if($data->anonim == true)
+                                @if($data->anonim == "true")
                                     <p>anonim</p>
                                 @else
                                     {{$data->pengirim}}

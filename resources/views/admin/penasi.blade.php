@@ -56,7 +56,7 @@
                                 @endif  
                                 </td>
                                 <td>
-                                @if($data->anonim == true)
+                                @if($data->anonim == "true")
                                     <p>anonim</p>
                                 @else
                                     {{$data->pengirim}}
@@ -115,7 +115,7 @@
                                         <option value="Psikologi" > Psikologi </option>
                                         <option value="Kekerasan" > Kekerasan </option>
                                         <option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>
-                                        <option value="Saran dan Prasana" > Saran dan Prasana </option>
+                                        <option value="Saran dan Prasana" > Sarana dan Prasana </option>
                                     </select>
                                 </div>
                             </div>
@@ -170,11 +170,11 @@
             $(kategori).append('<option value="Psikologi" > Psikologi </option>');
             $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
             $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-            $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+            $(kategori).append('<option value="Saran dan Prasana" > Sarana dan Prasana </option>');
         }else if(id == "Aspirasi"){
             $(kategori).empty();
             $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-            $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+            $(kategori).append('<option value="Saran dan Prasana" > Sarana dan Prasana </option>');
         }else{
             $(kategori).empty();
             $(kategori).append('<option value="" > --Kategori-- </option>');

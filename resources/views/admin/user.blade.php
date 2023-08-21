@@ -18,7 +18,7 @@
                     <thead>
                         <tr class="text-center">
                             <th>NO</th>
-                            <!-- <th>NIK</th> -->
+                            <th>NISN</th>
                             <th>NAMA</th>
                             <th>EMAIL</th>
                             <th>TAHUN AJARAN</th>
@@ -29,11 +29,14 @@
                         @foreach($user as $data)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
+                                <td>{{$data->username}}</td>
                                 <td>{{$data->name}}</td>
                                 <td>{{$data->email}}</td>
                                 <td>
-                                    @if(date('Y') - $data->tahun_ajaran >= 3)
-                                        Sudah Lulus    
+                                    @if(date('Y') - $data->tahun_ajaran >= 3 && date('Y') - $data->tahun_ajaran <= 10 )
+                                        Sudah Lulus
+                                    @elseif(date('Y') - $data->tahun_ajaran >= 10)
+                                        Non - Aktif    
                                     @else
                                         {{$data->tahun_ajaran}}
                                     @endif
@@ -119,7 +122,7 @@
                                 <input type="text" name="name" id="edit-name" class="form-control" required/>
                             </div>
                             <div class="form-group">
-                                <label for="deskripsi">Nik</label>
+                                <label for="deskripsi">NISN</label>
                                 <input type="text" name="username" id="edit-username" class="form-control" disabled/>
                             </div>
                             <div class="form-group">
@@ -130,7 +133,7 @@
                                 <label for="tahun_ajaran">Silahkan Pilih Status</label>
                                 <select class="custom-select" name="tahun_ajaran" id="edit-tahun_ajaran">
                                     <option value="">--Status--</option>
-                                    <option value="Non-Aktif">Non-Aktif</option>
+                                    <option value="-99">Non-Aktif</option>
                                 </select>
                             </div>
                             <!-- <div class="form-group">
