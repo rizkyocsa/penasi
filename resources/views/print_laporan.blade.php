@@ -46,7 +46,21 @@
                     </td>
                     <td>{{$penasi->tempat}}</td>
                     <td>{{$penasi->tanggapan}}</td>
-                    <td>{{$penasi->status}}</td>
+                    <td>
+                        @if($penasi->berkasPenyelesaian !== null)
+                        <img src="{{ public_path('storage/berkasPenyelesaian/'.$penasi->berkasPenyelesaian) }}" width="100px" class="mx-auto d-block"/>
+                        @else
+                            [Gambar tidak tersedia]
+                        @endif
+                    <td>
+                    @if($penasi->status == 1)
+                        Selesai
+                    @elseif($penasi->status == 2)
+                        Ditolak
+                    @else
+                        Pending
+                    @endif  
+                    </td>
                     <td>{{$penasi->pengirim}}</td>
                 </tr>
             @endforeach

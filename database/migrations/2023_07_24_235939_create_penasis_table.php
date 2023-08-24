@@ -21,9 +21,10 @@ class CreatePenasisTable extends Migration
             $table->string('berkasPendukung')->nullable();
             $table->string('tempat')->nullable();
             $table->string('tanggapan')->nullable();
-            $table->string('status');
+            $table->string('berkasPenyelesaian')->nullable();
+            $table->integer('status');
+            $table->boolean('anonim')->default(false);
             $table->string('pengirim');
-            $table->string('anonim')->nullable();
             $table->timestamps();
         });
     }

@@ -8,18 +8,23 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 
 use App\Models\Penasi;
+use App\Models\Kategori;
 use PDF;
 
 class PenasiController extends Controller
 {
     public function penasi()
     {
-        return view('penasi.create');
+        // $user = Auth::user();   
+        $kategori = Kategori::all();
+        // dd($kategori);
+        return view('penasi.create', compact('kategori'));
     }
 
     public function index(){
         $user = Auth::user();
         $penasi = Penasi::all();
+        // $kategori = Kategori::all();
         return view('admin.penasi' , compact('user', 'penasi'));
     }
 
@@ -55,15 +60,15 @@ class PenasiController extends Controller
         $penasi->jenis = $req->get('jenis');
         $penasi->berkasPendukung = $req->get('berkasPendukung');
         $penasi->tempat = $req->get('tempat');
-        $penasi->status = "Proses";
+        $penasi->status = 3;
         $penasi->pengirim = $user;
 
         // dd($req->get('berkasPendukung'));
 
         if($req->get('checkbox') == null || $req->get('checkbox') == "false"){
-            $penasi->anonim = "false";   
+            $penasi->anonim = 0;   
         }else{
-            $penasi->anonim = $req->get('checkbox');   
+            $penasi->anonim = 1;   
         }
 
         if ($req->hasFile('berkasPendukung')) {
@@ -90,6 +95,27 @@ class PenasiController extends Controller
         $penasi = Penasi::find($id);
 
         return response()->json($penasi);
+    }
+
+    public function getKategori($jenis)
+    {
+        $kategori = Kategori::where('jenis', $jenis)->get()->toArray();
+
+        return response()->json($kategori);
+    }
+
+    public function getPengaduan()
+    {
+        $kategori = Kategori::All()->toArray();
+
+        return response()->json($kategori);
+    }
+
+    public function getAspirasi()
+    {
+        $kategori = Kategori::All()->toArray();
+
+        return response()->json($kategori);
     }
 
     public function update_penasi(Request $req){
@@ -155,13 +181,22 @@ class PenasiController extends Controller
         $penasi->tanggapan = $req->get('tanggapan');
         $penasi->status = $req->get('status');
 
-        if($penasi->status == "Proses"){
+        if($penasi->status == 3){
             $notification = array(
                 'message' => 'Tolong pilih status tanggapi',
                 'alert-type' => 'warning'
             );
     
             return redirect()->route('admin.penasi')->with($notification);
+        }
+
+        if ($req->hasFile('berkasPenyelesaian')) {
+            $extension = $req->file('berkasPenyelesaian')->extension();
+            $filename = 'berkasPenyelesaian'.time().'.'.$extension;
+            $req->file('berkasPenyelesaian')->storeAs(
+                'public/berkasPenyelesaian', $filename
+            );
+            $penasi->berkasPenyelesaian = $filename ;
         }
 
         $penasi->save();

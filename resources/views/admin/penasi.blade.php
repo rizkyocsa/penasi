@@ -24,6 +24,7 @@
                             <th>BERKAS PENDUKUNG</th>
                             <th>TEMPAT</th>
                             <th>TANGGAPAN</th>
+                            <th>BERKAS PENYELESAIAN</th>
                             <th>STATUS</th>
                             <th>PENGIRIM</th>
                             <th>AKSI</th>
@@ -47,16 +48,23 @@
                                 <td>{{$data->tempat}}</td>
                                 <td>{{$data->tanggapan}}</td>
                                 <td>
-                                @if($data->status == "Selesai")
-                                    <span class="badge bg-success">{{$data->status}}</span>
-                                @elseif($data->status == "Ditolak")
-                                    <span class="badge bg-danger">{{$data->status}}</span>
-                                @else
-                                    <span class="badge bg-warning">{{$data->status}}</span>  
-                                @endif  
+                                    @if($data->berkasPenyelesaian !== null)
+                                    <img src="{{ asset('storage/berkasPenyelesaian/'.$data->berkasPenyelesaian) }}" width="100px" class="mx-auto d-block"/>
+                                    @else
+                                        [Gambar tidak tersedia]
+                                    @endif
                                 </td>
                                 <td>
-                                @if($data->anonim == "true")
+                                @if($data->status == 1)
+                                    <span class="badge bg-success">Selesai</span>
+                                @elseif($data->status == 2)
+                                    <span class="badge bg-danger">Ditolak</span>
+                                @else
+                                    <span class="badge bg-warning">Pending</span>  
+                                @endif  
+                                </td>         
+                                <td>
+                                @if($data->anonim == 1)
                                     <p>anonim</p>
                                 @else
                                     {{$data->pengirim}}
@@ -65,7 +73,7 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-tanggapi" class="btn btn-success" data-toggle="modal" data-target="#tanggapiModal" data-id="{{ $data->id }}"
-                                        {{ $data->status == "Proses" ? '' : 'disabled' }}>
+                                        {{ $data->status == 3 ? '' : 'disabled' }}>
                                         Tanggapi
                                     </button>
                                     </div>
@@ -123,15 +131,19 @@
                             <div class="form-group">
                                     <label for="jenis">Silahkan Pilih Tanggapan</label>
                                     <select class="custom-select" name="status" id="edit-status">
-                                        <option value="Proses" hidden>--Tanggapan--</option>
-                                        <option value="Selesai">Diterima</option>
-                                        <option value="Ditolak">Ditolak</option>
+                                        <option value="3" hidden>--Tanggapan--</option>
+                                        <option value="1">Diterima</option>
+                                        <option value="2">Ditolak</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Tanggapan</label>
                                     <textarea cols="30" rows="10"
                                     type="text" name="tanggapan" id="edit-tanggapan" class="form-control" required/></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Berkas Penyelesaian (Optional)</label>
+                                    <input type="file" class="form-control rounded" id="berkasPenyelesaian" name="berkasPenyelesaian" placeholder="Berkas Penyelesaian">
                                 </div>
                                 <!-- <div class="form-group" id="image-area"></div>
                                 <div class="form-group">
@@ -161,20 +173,59 @@
 <script>
     
     $('.jenis').change(function() {
-        var id = $(this).val();
+        var jenis = $(this).val();
         alert(id); 
         var kategori= document.getElementById('edit-kategori');
-        if(id == "Pengaduan")
+        if(jenis == "Pengaduan")
         {
             $(kategori).empty();
-            $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-            $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-            $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-            $(kategori).append('<option value="Saran dan Prasana" > Sarana dan Prasana </option>');
-        }else if(id == "Aspirasi"){
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#edit-kategori');
+
+                        $.each(data, function(index, item) {
+                            // $(kategori).append('<option value="{{$data->kategori}}" > {{$data->kategori}} </option>');
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+
+        }else if(jenis == "Aspirasi"){
             $(kategori).empty();
-            $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-            $(kategori).append('<option value="Saran dan Prasana" > Sarana dan Prasana </option>');
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#edit-kategori');
+
+                        $.each(data, function(index, item) {
+                            // $(kategori).append('<option value="{{$data->kategori}}" > {{$data->kategori}} </option>');
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
         }else{
             $(kategori).empty();
             $(kategori).append('<option value="" > --Kategori-- </option>');

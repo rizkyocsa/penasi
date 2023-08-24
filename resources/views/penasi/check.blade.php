@@ -21,6 +21,7 @@
                             <th>BERKAS</th>
                             <th>TEMPAT</th>
                             <th>TANGGAPAN</th>
+                            <th>BERKAS</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -43,12 +44,19 @@
                                 <td>{{$data->tempat}}</td>
                                 <td>{{$data->tanggapan}}</td>
                                 <td>
-                                @if($data->status == "Selesai")
-                                    <span class="badge bg-success">{{$data->status}}</span>
-                                @elseif($data->status == "Ditolak")
-                                    <span class="badge bg-danger">{{$data->status}}</span>
+                                    @if($data->berkasPenyelesaian !== null)
+                                    <img src="{{ asset('storage/berkasPenyelesaian/'.$data->berkasPenyelesaian) }}" width="100px" class="mx-auto d-block"/>
+                                    @else
+                                        [Gambar tidak tersedia]
+                                    @endif
+                                </td>
+                                <td>
+                                @if($data->status == 1)
+                                    <span class="badge bg-success">Selesai</span>
+                                @elseif($data->status == 2)
+                                    <span class="badge bg-danger">Ditolak</span>
                                 @else
-                                    <span class="badge bg-warning">{{$data->status}}</span>  
+                                    <span class="badge bg-warning">Pending</span>  
                                 @endif  
                                 </td>
                                 <td>

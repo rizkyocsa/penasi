@@ -29,6 +29,9 @@
                             <label for="kategori">Silahkan Pilih Kategori</label>
                             <select class="custom-select" id="kategori" name="kategori">
                                 <option value="">--Kategori--</option>
+                                <!-- @foreach($kategori as $data)
+                                    <option value="{{$data->kategori}}" > {{$data->kategori}} </option>
+                                @endforeach -->
                                 <!-- <option value="Pengaduan">Pengaduan</option>
                                 <option value="Aspirasi">Aspirasi</option> -->
                             </select>
@@ -60,22 +63,71 @@
 @section('js')
 <script>
         $('.jenis').change(function() {
-            var id = $(this).val();
+            var jenis = $(this).val();
             // alert(id); 
             var kategori= document.getElementById('kategori');
-            if(id == "Pengaduan")
+            if(jenis == "Pengaduan")
             {
                 $(kategori).empty();
-                $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-                $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
-                $(kategori).append('<option value="Lainnya" >Lainnya</option>');
-            }else if(id == "Aspirasi"){
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#kategori');
+
+                        $.each(data, function(index, item) {
+                            
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Psikologi" > Psikologi </option>');
+                // $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
+            }else if(jenis == "Aspirasi"){
                 $(kategori).empty();
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
-                $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                
+                $.ajax({
+                    url: 'getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#kategori');
+
+                        $.each(data, function(index, item) {
+
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
             }else{
                 $(kategori).empty();
                 $(kategori).append('<option value="" > --Kategori-- </option>');

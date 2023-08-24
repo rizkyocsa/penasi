@@ -90,10 +90,12 @@ Route::get('penasi/delete/{id}', [App\Http\Controllers\PenasiController::class, 
 
 Route::get('ajaxadmin/dataPenasi/{id}', [App\Http\Controllers\PenasiController::class, 'getDataPenasi']);
 
+Route::get('getKategori/{jenis}', [App\Http\Controllers\PenasiController::class, 'getKategori']);
+
 Route::get('change', [App\Http\Controllers\UsersController::class, 'change'])
     ->name('change');
 
-    Route::post('change', [App\Http\Controllers\UsersController::class, 'change_password'])
+Route::post('change/password', [App\Http\Controllers\UsersController::class, 'change_password'])
     ->name('change.password');
 
 //Master User
