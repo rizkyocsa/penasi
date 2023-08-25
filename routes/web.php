@@ -122,6 +122,26 @@ Route::post('admin/user/import', [App\Http\Controllers\UsersController::class, '
     ->name('admin.user.import')
     ->middleware('is_admin');
 
+//Master Admin Kategori
+Route::get('admin/kategori', [App\Http\Controllers\KategoriController::class, 'index'])
+    ->name('admin.kategori')
+    ->middleware('is_admin');
+
+Route::post('admin/kategori', [App\Http\Controllers\KategoriController::class, 'submit_kategori'])
+    ->name('admin.kategori.submit')
+    ->middleware('is_admin');
+
+Route::get('admin/ajaxadmin/dataKategori/{id}', [App\Http\Controllers\KategoriController::class, 'getDataKategori'])
+    ->middleware('is_admin');
+
+Route::patch('admin/kategori/update', [App\Http\Controllers\KategoriController::class, 'update_kategori'])
+    ->name('admin.kategori.update')
+    ->middleware('is_admin');
+
+Route::delete('admin/kategori/delete/{id}', [App\Http\Controllers\KategoriController::class, 'delete_kategori'])
+    ->name('admin.kategori.delete')
+    ->middleware('is_admin');
+
 //Master Admin Penasi
 Route::get('admin/penasi', [App\Http\Controllers\PenasiController::class, 'index'])
     ->name('admin.penasi')

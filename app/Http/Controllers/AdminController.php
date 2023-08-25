@@ -24,11 +24,12 @@ class AdminController extends Controller
     public function index(){
         $user = Auth::user();
         $users = User::All()->count();
-        $proses = Penasi::All()->where('status', 'Proses')->count();
-        $selesai = Penasi::All()->where('status', 'Selesai')->count();
-        $ditolak = Penasi::All()->where('status', 'Ditolak')->count();
+        $proses = Penasi::All()->where('status', '3')->count();
+        $selesai = Penasi::All()->where('status', '1')->count();
+        $ditolak = Penasi::All()->where('status', '2')->count();
         $pengaduan = Penasi::All()->where('jenis', 'Pengaduan')->count();
         $aspirasi = Penasi::All()->where('jenis', 'Aspirasi')->count();
+        // dd($pengaduan);
         return view('home', compact('user', 'users', 'proses','selesai','ditolak','pengaduan','aspirasi'));
     }
 

@@ -17,17 +17,17 @@ class CreateStatusSeeder extends Seeder
         $status = [
             [
                 'id' => '1',
-                'name' => 'Selesai'
+                'nama' => 'Selesai'
 
             ],
             [
                 'id' => '2',
-                'name' => 'Ditolak'
+                'nama' => 'Ditolak'
 
             ],
             [
                 'id' => '3',
-                'name' => 'Pending'
+                'nama' => 'Pending'
             ]
         ];
 

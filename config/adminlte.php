@@ -318,14 +318,21 @@ return [
         //    'icon' => 'fas fa-light fa-users',
         //    'can'  => 'isAdmin',
         //],
-        ['text' => 'Data Siswa',
-        'url'  => 'admin/user',
-        'icon' => 'fas fa-light fa-users',
-        'can'  => 'isAdmin',
-       ],
-       [
+        [
+            'text' => 'Data Siswa',
+            'url'  => 'admin/user',
+            'icon' => 'fas fa-light fa-users',
+            'can'  => 'isAdmin',
+        ],
+        [
             'text' => 'Data Penasi',
             'url'  => 'admin/penasi',
+            'icon' => 'fas fa-light fa-comments',
+            'can'  => 'isAdmin',
+        ],
+        [
+            'text' => 'Data Kategori',
+            'url'  => 'admin/kategori',
             'icon' => 'fas fa-light fa-comments',
             'can'  => 'isAdmin',
         ],
