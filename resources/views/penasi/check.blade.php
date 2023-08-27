@@ -62,11 +62,11 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-penasi" class="btn btn-success" data-toggle="modal" data-target="#editPenasi" data-id="{{ $data->id }}" 
-                                        {{ $data->status == "Proses" ? '' : 'disabled' }}>
+                                        {{ $data->status == 3 ? '' : 'disabled' }}>
                                             Edit
                                         </button>
                                         <button class="btn btn-danger" onclick="deleteConfirmation('{{$data->id}}','{{$data->deskripsi}}')"
-                                        {{ $data->status == "Proses" ? '' : 'disabled' }}>
+                                        {{ $data->status == 3 ? '' : 'disabled' }}>
                                             Hapus
                                         </button>
                                     </div>
@@ -99,7 +99,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="jenis">Silahkan Pilih Jenis</label>
-                                    <select class="custom-select jenis" name="jenis" id="edit-jenis" >
+                                    <select class="custom-select editjns" name="jenis" id="edit-jenis" >
                                         <option value="">--Jenis--</option>
                                         <option value="Pengaduan">Pengaduan</option>
                                         <option value="Aspirasi">Aspirasi</option>
@@ -135,7 +135,7 @@
                         </div>                        
                         <div class="modal-footer">
                             <input type="hidden" name="id" id="edit-id">
-                            <input type="text" name="old-berkasPendukung" id="old-berkasPendukung">
+                            <!-- <input type="text" name="old-berkasPendukung" id="old-berkasPendukung"> -->
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
                         </div>
@@ -152,22 +152,143 @@
 @section('js')
 <script>
         $('.jenis').change(function() {
-            var id = $(this).val();
-            alert(id); 
-            var kategori= document.getElementById('edit-kategori');
-            if(id == "Pengaduan")
+            var jenis = $(this).val();
+            // alert(id); 
+            var kategori= document.getElementById('kategori');
+            if(jenis == "Pengaduan")
             {
                 $(kategori).empty();
-                $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-                $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
-                $(kategori).append('<option value="Lainnya" > Lainnya </option>');
-            }else if(id == "Aspirasi"){
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#kategori');
+
+                        $.each(data, function(index, item) {
+                            
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Psikologi" > Psikologi </option>');
+                // $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
+            }else if(jenis == "Aspirasi"){
                 $(kategori).empty();
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
-                $(kategori).append('<option value="Lainnya" > Lainnya </option>');
+                
+                $.ajax({
+                    url: 'getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#kategori');
+
+                        $.each(data, function(index, item) {
+
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
+            }else{
+                $(kategori).empty();
+                $(kategori).append('<option value="" > --Kategori-- </option>');
+            }
+        });
+
+        $('.editjns').change(function() {
+            var jenis = $(this).val();
+            // alert(id); 
+            var kategori= document.getElementById('edit-kategori');
+            if(jenis == "Pengaduan")
+            {
+                $(kategori).empty();
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#edit-kategori');
+
+                        $.each(data, function(index, item) {
+                            
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Psikologi" > Psikologi </option>');
+                // $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
+            }else if(jenis == "Aspirasi"){
+                $(kategori).empty();
+                
+                $.ajax({
+                    url: '/getKategori/' + jenis,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var select = $('#edit-kategori');
+
+                        $.each(data, function(index, item) {
+                            
+
+                            var option = $('<option>', {
+                                value: item.kategori, // Replace 'value' with the appropriate property from your data
+                                text: item.kategori // Replace 'text' with the appropriate property from your data
+                            });
+
+                            select.append(option);
+                            
+                        });
+                        $(kategori).append('<option value="Lainnya" >Lainnya</option>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
+                
             }else{
                 $(kategori).empty();
                 $(kategori).append('<option value="" > --Kategori-- </option>');
