@@ -113,10 +113,10 @@
                                     <label for="kategori">Silahkan Pilih Kategori</label>
                                     <select class="custom-select" name="kategori" id="edit-kategori" >
                                         <option value="">--Kategori--</option>
-                                        <option value="Psikologi" > Psikologi </option>
+                                        <!-- <option value="Psikologi" > Psikologi </option>
                                         <option value="Kekerasan" > Kekerasan </option>
                                         <option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>
-                                        <option value="Saran dan Prasana" > Saran dan Prasana </option>
+                                        <option value="Saran dan Prasana" > Saran dan Prasana </option> -->
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -254,10 +254,6 @@
                         console.error(xhr.responseText);
                     }
                 });
-                // $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-                // $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 
             }else if(jenis == "Aspirasi"){
                 $(kategori).empty();
@@ -286,12 +282,10 @@
                         console.error(xhr.responseText);
                     }
                 });
-                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 
             }else{
                 $(kategori).empty();
-                $(kategori).append('<option value="" > --Kategori-- </option>');
+                // $(kategori).append('<option value="" > --Kategori-- </option>');
             }
         });
 

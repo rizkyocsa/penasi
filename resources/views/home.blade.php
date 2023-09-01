@@ -137,7 +137,7 @@ var areaChart = new Chart(ctx, {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','Agustus','September','Oktober','November','Desember'],
         datasets: [{
             label: 'pengaduan', // Name the series
-            data: [0,	0,	0,	0,	0,	0,	0, pengaduan, 0, 0, 0, 0],  // Specify the data values array
+            data: [0,	0,	0,	0,	0,	0,	0, 0, pengaduan, 0, 0, 0],  // Specify the data values array
             fill: true,
             borderColor: '#2196f3', // Add custom color border (Line)
             backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
@@ -145,7 +145,7 @@ var areaChart = new Chart(ctx, {
         },
                   {
             label: 'aspirasi', // Name the series
-            data: [0,	0,	0,	0,	0,	0, 0,  aspirasi, 0, 0, 0, 0], // Specify the data values array
+            data: [0,	0,	0,	0,	0,	0, 0, 0, aspirasi, 0, 0, 0], // Specify the data values array
             fill: true,
             borderColor: '#4CAF50', // Add custom color border (Line)
             backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
