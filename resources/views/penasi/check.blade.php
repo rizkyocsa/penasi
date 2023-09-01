@@ -135,7 +135,7 @@
                         </div>                        
                         <div class="modal-footer">
                             <input type="hidden" name="id" id="edit-id">
-                            <!-- <input type="text" name="old-berkasPendukung" id="old-berkasPendukung"> -->
+                            <input type="text" name="old-berkasPendukung" id="old-berkasPendukung">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
                         </div>
