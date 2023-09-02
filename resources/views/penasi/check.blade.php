@@ -112,11 +112,6 @@
                                 <div class="form-group">
                                     <label for="kategori">Silahkan Pilih Kategori</label>
                                     <select class="custom-select" name="kategori" id="edit-kategori" >
-                                        <!-- <option value="">--Kategori--</option> -->
-                                        <!-- <option value="Psikologi" > Psikologi </option>
-                                        <option value="Kekerasan" > Kekerasan </option>
-                                        <option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>
-                                        <option value="Saran dan Prasana" > Saran dan Prasana </option> -->
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -135,7 +130,7 @@
                         </div>                        
                         <div class="modal-footer">
                             <input type="hidden" name="id" id="edit-id">
-                            <input type="text" name="old-berkasPendukung" id="old-berkasPendukung">
+                            <input type="hidden" name="old-berkasPendukung" id="old-berkasPendukung">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
                         </div>
@@ -153,7 +148,6 @@
 <script>
         $('.jenis').change(function() {
             var jenis = $(this).val();
-            // alert(id); 
             var kategori= document.getElementById('kategori');
             if(jenis == "Pengaduan")
             {
@@ -182,10 +176,6 @@
                         console.error(xhr.responseText);
                     }
                 });
-                // $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-                // $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 
             }else if(jenis == "Aspirasi"){
                 $(kategori).empty();
@@ -214,8 +204,6 @@
                         console.error(xhr.responseText);
                     }
                 });
-                // $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                // $(kategori).append('<option value="Sarana dan Prasana" > Sarana dan Prasana </option>');
                 
             }else{
                 $(kategori).empty();
@@ -224,8 +212,7 @@
         });
 
         $('.editjns').change(function() {
-            var jenis = $(this).val();
-            // alert(id); 
+            var jenis = $(this).val(); 
             var kategori= document.getElementById('edit-kategori');
             if(jenis == "Pengaduan")
             {
@@ -238,7 +225,6 @@
                         var select = $('#edit-kategori');
 
                         $.each(data, function(index, item) {
-                            
 
                             var option = $('<option>', {
                                 value: item.kategori, // Replace 'value' with the appropriate property from your data
@@ -293,8 +279,9 @@
         $(function(){
             $(document).on('click','#btn-edit-penasi', function(){
                 let id = $(this).data('id');
-                // alert(id);
                 $('#image-area').empty();
+                let jns = "";
+
                 $.ajax({
                     type: "get",
                     url: "{{url('ajaxadmin/dataPenasi')}}/"+id,
@@ -302,14 +289,13 @@
                     success: function(res){
                         console.log(res);
                         console.log(res.jenis);
-                        // $('#edit-name').val(res.name);
+                        jns = res.jenis;
                         $('#edit-jenis option[value="'+res.jenis+'"]').attr("selected", "selected");
                         $('#edit-deskripsi').val(res.deskripsi);
-                        $('#edit-kategori option[value="'+res.kategori+'"]').attr("selected", "selected");
-                        // $('#edit-kategori').val(res.kategori);
                         $('#edit-id').val(res.id);
                         $('#old-berkasPendukung').val(res.berkasPendukung);
                         $('#edit-tempat').val(res.tempat);
+
                         if(res.cover !== null){
                             $('#image-area').append(
                                 "<img src='"+baseurl+"/storage/berkasPendukung/"+res.berkasPendukung+"' width='200px'>"
@@ -317,8 +303,37 @@
                         }else{
                             $('#image-area').append('[Gambar tidak tersedia]');
                         }
+
+                        $.ajax({
+                            // Fetch the options for the 'edit-kategori' dropdown
+                            url: '/getKategori/' + jns,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(data) {   
+                                var select = $('#edit-kategori');
+                                select.empty(); // Clear existing options
+                                $.each(data, function(index, item) {
+                                    var option = $('<option>', {
+                                        value: item.kategori,
+                                        text: item.kategori
+                                    });
+                                    select.append(option);
+                                });
+                                // Add the "Lainnya" option
+                                select.append('<option value="Lainnya" >Lainnya</option>');
+                                // Now set the selected value
+                                $('#edit-kategori option[value="'+res.kategori+'"]').attr("selected", "selected");
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+
                     },
                 });
+
+                
+
             });
         });
 

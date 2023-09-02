@@ -27,136 +27,25 @@ class AdminController extends Controller
         $proses = Penasi::All()->where('status', '3')->count();
         $selesai = Penasi::All()->where('status', '1')->count();
         $ditolak = Penasi::All()->where('status', '2')->count();
-        $pengaduan = Penasi::All()->where('jenis', 'Pengaduan')->count();
-        $aspirasi = Penasi::All()->where('jenis', 'Aspirasi')->count();
+
+        $pengaduan = [];
+        $aspirasi = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = Penasi::whereMonth('created_at', $month)
+                               ->where('jenis', 'Pengaduan')
+                               ->count();
+            $pengaduan[] = $count;
+        }
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = Penasi::whereMonth('created_at', $month)
+                               ->where('jenis', 'Aspirasi')
+                               ->count();
+            $aspirasi[] = $count;
+        }
         // dd($pengaduan);
         return view('home', compact('user', 'users', 'proses','selesai','ditolak','pengaduan','aspirasi'));
     }
-
-    public function books(){
-        $user = Auth::user();
-        $books = Book::all();
-        return view('book', compact('user', 'books'));
-    }
-
-    public function submit_book(Request $req){
-        $validate = $req->validate([
-            'judul' => 'required|max:255',
-            'penulis' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'penerbit' => 'required|max:255',
-            'cover' => 'required|image|mimes:jpeg,jpg|max:2048',
-        ]);
-
-        $book = new Book;
-
-        $book->judul = $req->get('judul');
-        $book->penulis = $req->get('penulis');
-        $book->tahun = $req->get('tahun');
-        $book->penerbit = $req->get('penerbit');
-
-        if($req->hasFile('cover')){
-            $extension = $req->file('cover')->extension();
-
-            $filename = 'cover_buku_'.time().'.'.$extension;
-
-            $req->file('cover')->storeAs(
-                'public/cover_buku', $filename
-            );
-
-            $book->cover = $filename;
-        }
-
-        $book->save();
-
-        $notification = array(
-            'message' => 'Data buku berhasil ditambahkan',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.books')->with($notification);
-    }
-
-    public function update_book(Request $req){
-        $book = Book::find($req->get('id'));
-
-        $validate = $req->validate([
-            'judul' => 'required|max:255',
-            'penulis' => 'required',
-            'tahun' => 'required',
-            'penerbit' => 'required',
-            'cover' => 'required|image|mimes:jpeg,jpg|max:2048',
-        ]);
-
-        $book->judul = $req->get('judul');
-        $book->penulis = $req->get('penulis');
-        $book->tahun = $req->get('tahun');
-        $book->penerbit = $req->get('penerbit');
-
-        if($req->hasFile('cover')){
-            $extension = $req->file('cover')->extension();
-
-            $filename = 'cover_buku_'.time().'.'.$extension;
-
-            $req->file('cover')->storeAs(
-                'public/cover_buku', $filename
-            );
-
-            Storage::delete('public/cover_buku/'.$req->get('old_cover'));
-            $book->cover = $filename;
-        }
-
-        $book->save();
-
-        $notification = array(
-            'message' => 'Data buku berhasil diubah',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.books')->with($notification);
-    }
-
-    public function getDataBuku($id){
-        $buku = Book::find($id);
-
-        return response()->json($buku);
-    }
-
-    public function delete_book($id){
-        $book = Book::find($id);
-
-        Storage::delete('public/cover_buku/'.$book->cover);
-
-        $book->delete();
-
-        $success = true;
-        $message = "Data buku berhasil dihapus";
-
-        return response()->json([
-            'success' => $success,
-            'message' => $message,
-        ]);
-    }
-
-    public  function print_books(){
-        $books = Book::all();
-
-        $pdf = PDF::loadview('print_books',['books'=>$books]);
-        return $pdf->download('data_buku.pdf');
-    }
-
-    public function export(){
-        return Excel::download(new BooksExport, 'books.xlsx');
-    }
-
-    public function import(Request $req){
-        Excel::import(new BooksImport, $req->file('file'));
-
-        $notification = array(
-            'message' => 'Import data berhasil',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.books')->with($notification);
-    }
+    
 }

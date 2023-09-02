@@ -101,10 +101,6 @@
                 <canvas id="myChart"></canvas>
             </div>
             @endif
-            <input type="hidden" value="{{ $pengaduan }}" id="jml_pengaduan">
-            <input type="hidden" value="{{ $aspirasi }}" id="jml_aspirasi">
-            <!-- <input type="hidden" value="{{ $pengaduan }}" id="jml_pengaduan">
-            <input type="hidden" value="{{ $aspirasi }}" id="jml_aspirasi"> -->
         </div>
     </div>
 @endsection
@@ -122,10 +118,15 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
-    var pengaduan = document.getElementById("jml_pengaduan").value;
-    var aspirasi = document.getElementById("jml_aspirasi").value;
-    console.log(aspirasi);
+    // var pengaduan = document.getElementById("jml_pengaduan").value;
+    // var aspirasi = document.getElementById("jml_aspirasi").value;
+    // console.log(aspirasi);
+    // console.log(pengaduan);
+
+    var pengaduan = @json($pengaduan);
+    var aspirasi = @json($aspirasi);
     console.log(pengaduan);
+    console.log(aspirasi);
 </script>
 <script>  
 
@@ -137,7 +138,7 @@ var areaChart = new Chart(ctx, {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','Agustus','September','Oktober','November','Desember'],
         datasets: [{
             label: 'pengaduan', // Name the series
-            data: [0,	0,	0,	0,	0,	0,	0, 0, pengaduan, 0, 0, 0],  // Specify the data values array
+            data: pengaduan,  // Specify the data values array
             fill: true,
             borderColor: '#2196f3', // Add custom color border (Line)
             backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
@@ -145,7 +146,7 @@ var areaChart = new Chart(ctx, {
         },
                   {
             label: 'aspirasi', // Name the series
-            data: [0,	0,	0,	0,	0,	0, 0, 0, aspirasi, 0, 0, 0], // Specify the data values array
+            data: aspirasi, // Specify the data values array
             fill: true,
             borderColor: '#4CAF50', // Add custom color border (Line)
             backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)

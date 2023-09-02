@@ -14,17 +14,14 @@ use PDF;
 class PenasiController extends Controller
 {
     public function penasi()
-    {
-        // $user = Auth::user();   
+    { 
         $kategori = Kategori::all();
-        // dd($kategori);
         return view('penasi.create', compact('kategori'));
     }
 
     public function index(){
         $user = Auth::user();
         $penasi = Penasi::all();
-        // $kategori = Kategori::all();
         return view('admin.penasi' , compact('user', 'penasi'));
     }
 
@@ -48,7 +45,6 @@ class PenasiController extends Controller
             'jenis' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required',
-            // 'berkasPendukung' => 'required',
         ]);
 
         $user = Auth::user()->name;
@@ -62,8 +58,6 @@ class PenasiController extends Controller
         $penasi->tempat = $req->get('tempat');
         $penasi->status = 3;
         $penasi->pengirim = $user;
-
-        // dd($req->get('berkasPendukung'));
 
         if($req->get('checkbox') == null || $req->get('checkbox') == "false"){
             $penasi->anonim = 0;   
@@ -121,25 +115,16 @@ class PenasiController extends Controller
     public function update_penasi(Request $req){
         $penasi = Penasi::find($req->get('id'));
 
-        // dd($penasi);
-
         $validate = $req->validate([
             'jenis' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required',
-            // 'berkasPendukung' => 'required',
         ]);
 
         $penasi->jenis = $req->get('jenis');
         $penasi->deskripsi = $req->get('deskripsi');
         $penasi->kategori = $req->get('kategori');
-        // $penasi->berkasPendukung = $req->get('berkasPendukung');
         $penasi->tempat = $req->get('tempat');
-
-        // $cek = $req->get('tempat');
-        // dd($cek);
-
-        // if($req->get('berkasPendukung') !== null){
             
             if($req->hasFile('berkasPendukung')){
                 $extension = $req->file('berkasPendukung')->extension();
@@ -155,9 +140,6 @@ class PenasiController extends Controller
             }else{
                 $penasi->berkasPendukung = $req->get('old-berkasPendukung');
             }
-        // }else{
-        //     $penasi->berkasPendukung = $req->get('old-berkasPendukung');
-        // }
 
         $penasi->save();
 
@@ -226,15 +208,7 @@ class PenasiController extends Controller
     public function laporan_print(){
         $penasis = Penasi::all();
         set_time_limit(300);
-        // dd($penasi);
         $pdf = PDF::loadview('print_laporan',['penasis'=>$penasis]);
         return $pdf->download('data_penasi.pdf');
-    }
-
-    public  function print_books(){
-        $books = Book::all();
-        dd($books);
-        $pdf = PDF::loadview('print_books',['books'=>$books]);
-        return $pdf->download('data_buku.pdf');
     }
 }
