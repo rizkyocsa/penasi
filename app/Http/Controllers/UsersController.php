@@ -34,7 +34,6 @@ class UsersController extends Controller
         $user->username = $req->get('username');
         $user->email = $req->get('email');
         $user->password = Hash::make('12345678');
-        // $user->tahun_ajaran = date("Y");
         $user->tahun_ajaran = $req->get('tahun_ajaran');
         $user->roles_id = 2;
 
@@ -147,15 +146,4 @@ class UsersController extends Controller
 
         return redirect()->route('admin.user')->with($notification);
     }
-
-    // public function import(Request $req){
-    //     Excel::import(new BooksImport, $req->file('file'));
-
-    //     $notification = array(
-    //         'message' => 'Import data berhasil',
-    //         'alert-type' => 'success'
-    //     );
-
-    //     return redirect()->route('admin.books')->with($notification);
-    // }
 }
