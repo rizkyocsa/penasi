@@ -112,7 +112,7 @@
                                 <div class="form-group">
                                     <label for="kategori">Silahkan Pilih Kategori</label>
                                     <select class="custom-select" name="kategori" id="edit-kategori" >
-                                        <option value="">--Kategori--</option>
+                                        <!-- <option value="">--Kategori--</option> -->
                                         <!-- <option value="Psikologi" > Psikologi </option>
                                         <option value="Kekerasan" > Kekerasan </option>
                                         <option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>
@@ -285,7 +285,7 @@
                 
             }else{
                 $(kategori).empty();
-                // $(kategori).append('<option value="" > --Kategori-- </option>');
+                $(kategori).append('<option value="" > --Kategori-- </option>');
             }
         });
 

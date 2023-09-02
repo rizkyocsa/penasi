@@ -103,8 +103,8 @@
             @endif
             <input type="hidden" value="{{ $pengaduan }}" id="jml_pengaduan">
             <input type="hidden" value="{{ $aspirasi }}" id="jml_aspirasi">
-            <input type="text" value="{{ $pengaduan }}" id="jml_pengaduan">
-            <input type="text" value="{{ $aspirasi }}" id="jml_aspirasi">
+            <!-- <input type="hidden" value="{{ $pengaduan }}" id="jml_pengaduan">
+            <input type="hidden" value="{{ $aspirasi }}" id="jml_aspirasi"> -->
         </div>
     </div>
 @endsection
