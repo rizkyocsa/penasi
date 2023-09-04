@@ -93,21 +93,7 @@ class PenasiController extends Controller
 
     public function getKategori($jenis)
     {
-        $kategori = Kategori::where('jenis', $jenis)->get()->toArray();
-
-        return response()->json($kategori);
-    }
-
-    public function getPengaduan()
-    {
-        $kategori = Kategori::All()->toArray();
-
-        return response()->json($kategori);
-    }
-
-    public function getAspirasi()
-    {
-        $kategori = Kategori::All()->toArray();
+        $kategori = Kategori::where('jenis', $jenis)->orderBy('kategori', 'asc')->get()->toArray();
 
         return response()->json($kategori);
     }

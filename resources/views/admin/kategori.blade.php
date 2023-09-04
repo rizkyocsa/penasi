@@ -31,7 +31,7 @@
                                 <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-kategori" class="btn btn-success" data-toggle="modal" data-target="#editKategoriModal" data-id="{{ $data->id }}">Edit</button>
-                                        <button class="btn btn-danger" onclick="deleteConfirmation('{{$data->id}}','{{$data->name}}')">Hapus</button>
+                                        <button class="btn btn-danger" onclick="deleteConfirmation('{{$data->id}}','{{$data->kategori}}')">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
@@ -126,66 +126,6 @@
 @section('js')
 <script>
     
-    // $('.jenis').change(function() {
-    //     var jenis = $(this).val();
-    //     alert(id); 
-    //     var kategori= document.getElementById('edit-kategori');
-    //     if(jenis == "Pengaduan")
-    //     {
-    //         $(kategori).empty();
-    //             $.ajax({
-    //                 url: '/getKategori/' + jenis,
-    //                 method: 'GET',
-    //                 dataType: 'json',
-    //                 success: function(data) {
-    //                     var select = $('#edit-kategori');
-
-    //                     $.each(data, function(index, item) {
-    //                         // $(kategori).append('<option value="{{$data->kategori}}" > {{$data->kategori}} </option>');
-
-    //                         var option = $('<option>', {
-    //                             value: item.kategori, // Replace 'value' with the appropriate property from your data
-    //                             text: item.kategori // Replace 'text' with the appropriate property from your data
-    //                         });
-
-    //                         select.append(option);
-    //                     });
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     console.error(xhr.responseText);
-    //                 }
-    //             });
-
-    //     }else if(jenis == "Aspirasi"){
-    //         $(kategori).empty();
-    //             $.ajax({
-    //                 url: '/getKategori/' + jenis,
-    //                 method: 'GET',
-    //                 dataType: 'json',
-    //                 success: function(data) {
-    //                     var select = $('#edit-kategori');
-
-    //                     $.each(data, function(index, item) {
-    //                         // $(kategori).append('<option value="{{$data->kategori}}" > {{$data->kategori}} </option>');
-
-    //                         var option = $('<option>', {
-    //                             value: item.kategori, // Replace 'value' with the appropriate property from your data
-    //                             text: item.kategori // Replace 'text' with the appropriate property from your data
-    //                         });
-
-    //                         select.append(option);
-    //                     });
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     console.error(xhr.responseText);
-    //                 }
-    //             });
-    //     }else{
-    //         $(kategori).empty();
-    //         $(kategori).append('<option value="" > --Kategori-- </option>');
-    //     }
-    // });
-
     //Modal Edit
     $(function(){
         $(document).on('click','#btn-edit-kategori', function(){
@@ -210,5 +150,43 @@
             });
         });
     });
+
+    //Delete
+    function deleteConfirmation(id, kategori){
+        Swal.fire({
+            title: "Hapus?",
+            icon: 'warning',
+            text: "Apakah anda yakin akan menghapus data kategori " + kategori +" ?!",
+            showCancelButton: !0,
+            confirmButtonText: "Ya, Lakukan!",
+            cancelButtonText: "Tidak, batalkan!", 
+            reverseButtons: !0
+        }).then(function (e){
+            if(e.value === true){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: "kategori/delete/" + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'json',
+                    success: function(results){
+                        if(results.success===true){
+                            swal.fire("Done!", results.message, "success");
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        }else{
+                            swal.fire("Error!", results.message, "error");
+                        }
+                    }
+                });
+            }else{
+                e.dismiss;
+            }
+        }, function(dismiss){
+            return false;
+        });
+    }
 </script>
 @endsection

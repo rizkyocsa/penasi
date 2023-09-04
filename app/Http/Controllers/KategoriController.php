@@ -23,7 +23,6 @@ class KategoriController extends Controller
             'kategori' => 'required',
         ]);
 
-
         $kategori = new Kategori;
 
         $kategori->jenis = $req->get('jenis');
@@ -60,7 +59,7 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori')->with($notification);
     }
 
-    public function delete_kategori(){
+    public function delete_kategori($id){
         $kategori = Kategori::find($id);        
 
         $kategori->delete();
